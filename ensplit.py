@@ -59,8 +59,29 @@ def stitching(output_file = ""):
             with open(f'./{all_files[chosen_folder]}/{__file}', 'rb') as current_chunk:
                 output_to.write(current_chunk.read())
 
-def convert_folder_to_file():
-    return 0        
+def make_tarfile(output_filename="", source_dir = ""):
+    file_counter = 0
+    file_list = os.listdir()
+    for i in file_list:
+        print(f'{file_counter} : {file_list[file_counter]}')
+        file_counter += 1
+        
+    chosen_one = int(input('Choose a file/folder : '))
+    source_dir = file_list[chosen_one]
+    output_filename = f"{source_dir}.ensplit"
+    with tarfile.open(output_filename, "w:gz") as tar:
+        tar.add(source_dir, arcname=os.path.basename(source_dir))
+
+def recover_tarfile():
+    file_counter = 0
+    file_list = os.listdir()
+    for i in file_list:
+        print(f'{file_counter} : {file_list[file_counter]}')
+        file_counter += 1
+        
+    chosen_one = int(input('Choose a file/folder : '))
+    fileee = tarfile.open(f'{file_list[chosen_one]}')
+    fileee.extractall(f'./extracted_{file_list[chosen_one]}')
 
 def generate_key(name_of_key):
     # Name the encrypted files in accordance with keys
@@ -80,4 +101,6 @@ def start():
 #generate_key('my_key')
 #input_file_path = 'xubuntu-24.04-desktop-amd64.iso' 
 #split_file(input_file_path, max_bytes=50 * 1024 * 1024)
-stitching()
+#stitching()
+#make_tarfile('output_filename.tarr', source_dir = "")
+#recover_tarfile()
